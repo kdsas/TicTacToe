@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+    tools:context=".ChatFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_blue_bright">
+
+
+        <EditText
+            android:id="@+id/editTextSend"
+            android:layout_width="198dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="119dp"
+            android:layout_marginTop="474dp"
+            android:background="@drawable/edittext_design"
+            android:ems="10"
+            android:hint="Enter Message Here"
+            android:inputType="textPersonName"
+            android:textSize="10sp" />
+
+        <WebView
+            android:id="@+id/chatWebView"
+            android:layout_width="291dp"
+            android:layout_height="212dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="251dp">
+
+        </WebView>
+
+        <Button
+            android:id="@+id/buttonSend"
+            android:layout_width="41dp"
+            android:layout_height="21dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="170dp"
+            android:layout_marginTop="565dp"
+            android:background="@drawable/button_style"
+            android:text="Send"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/buttonGame"
+            android:layout_width="51dp"
+            android:layout_height="26dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="170dp"
+            android:layout_marginBottom="324dp"
+            android:background="@drawable/button_style"
+            android:text="Back To Game"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+</FrameLayout>
