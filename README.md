@@ -12,5 +12,5 @@ saving data using Android Studio Shared Preferences,
 
 creating a UDP client, and
 
-Sorting an ArrayList in reverse order
+sorting an ArrayList in reverse order
 
