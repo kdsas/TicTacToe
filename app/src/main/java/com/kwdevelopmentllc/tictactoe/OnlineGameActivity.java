@@ -32,7 +32,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdSettings;
+import com.facebook.ads.AudienceNetworkAds;
+import com.facebook.ads.InterstitialAd;
+import com.facebook.ads.InterstitialAdListener;
 
 
 public class OnlineGameActivity extends AppCompatActivity {
@@ -57,7 +62,8 @@ public class OnlineGameActivity extends AppCompatActivity {
     String winningNameRetrieval;
     ArrayAdapter arrayAdapter;
     ArrayList array_list;
-
+    private InterstitialAd interstitialAd;
+    private final String TAG = OnlineGameActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +79,61 @@ public class OnlineGameActivity extends AppCompatActivity {
         playerName = name;
         connectionText = (TextView) findViewById(R.id.connectionText);
         array_list = new ArrayList();
+        // Initialize the Audience Network SDK
+        AudienceNetworkAds.initialize(this);
+        interstitialAd = new InterstitialAd(this, "301912531524676_301948074854455");
+        //AdSettings.addTestDevice("8c15c671-3f3c-449a-85fb-ce33c6fbe5fa");
+        // Create listeners for the Interstitial Ad
+        InterstitialAdListener interstitialAdListener = new InterstitialAdListener() {
 
+
+            @Override
+            public void onInterstitialDisplayed(Ad ad) {
+                // Interstitial ad displayed callback
+                Log.e(TAG, "Interstitial ad displayed.");
+            }
+
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                // Interstitial dismissed callback
+                Log.e(TAG, "Interstitial ad dismissed.");
+            }
+
+
+
+            @Override
+            public void onError(Ad ad, AdError adError) {
+
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                // Interstitial ad is loaded and ready to be displayed
+                Log.d(TAG, "Interstitial ad is loaded and ready to be displayed!");
+                // Show the ad
+                interstitialAd.show();
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                // Ad clicked callback
+                Log.d(TAG, "Interstitial ad clicked!");
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+                // Ad impression logged callback
+                Log.d(TAG, "Interstitial ad impression logged!");
+            }
+        };
+
+        // For auto play video ads, it's recommended to load the ad
+        // at least 30 seconds before it is shown
+
+        interstitialAd.loadAd(
+                interstitialAd.buildLoadAdConfig()
+                        .withAdListener(interstitialAdListener)
+                        .build());
        Backbutton.setOnClickListener(new View.OnClickListener() {
 
             @Override
