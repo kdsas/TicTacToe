@@ -19,7 +19,7 @@
 
 
     <application
-        android:name="com.kwdevelopmentllc.tictactoe.TicTacToe"
+        android:hardwareAccelerated="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -30,13 +30,7 @@
         tools:ignore="MissingClass">
         <activity android:name=".CreditsActivity"></activity>
         <activity android:name=".NameActivity" />
-        <receiver android:name="com.appsflyer.SingleInstallBroadcastReceiver" android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
         <service android:name=".BackgroundMusic" />
-
         <activity android:name=".OnlineGameActivity" />
         <activity android:name=".StartActivity" />
         <activity android:name=".GameActivity" />
