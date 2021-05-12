@@ -5,21 +5,41 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import com.facebook.ads.*;
+import com.facebook.ads.AdSettings;
+import com.facebook.ads.AudienceNetworkAds;
+import static com.facebook.ads.AdSettings.DEBUG;
 
 
 
-
-public class NameActivity extends AppCompatActivity {
+public class NameActivity extends AppCompatActivity implements AudienceNetworkAds.InitListener{
     EditText nameText;
     Button enterButton;
-    String text="";
+   private AdView adView;
+
+    static void initialize(Context context) {
+        if (!AudienceNetworkAds.isInitialized(context)) {
+            if (DEBUG) {
+                AdSettings.turnOnSDKDebugger(context);
+            }
+
+            AudienceNetworkAds
+                    .buildInitSettings(context)
+                    .withInitListener(new NameActivity())
+                    .initialize();
+        }
+    }
+
+    @Override
+    public void onInitialized(AudienceNetworkAds.InitResult result) {
+        Log.d(AudienceNetworkAds.TAG, result.getMessage());
+    }
+
 
 
 
@@ -31,6 +51,47 @@ public class NameActivity extends AppCompatActivity {
         nameText = (EditText) findViewById(R.id.nameText);
         enterButton = (Button) findViewById(R.id.enterButton);
         nameText.getText( ).toString( );
+        initialize(getApplicationContext());
+        AudienceNetworkAds.initialize(this);
+        adView = new AdView(this, "301912531524676_301914931524436", AdSize.BANNER_HEIGHT_90);
+        //AdSettings.addTestDevice("8c15c671-3f3c-449a-85fb-ce33c6fbe5fa");
+        // Find the Ad Container
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+
+        // Add the ad view to your activity layout
+        adContainer.addView(adView);
+
+        // Request an ad
+        adView.loadAd();
+        AdListener adListener = new AdListener() {
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                // Ad error callback
+                Toast.makeText(
+                        NameActivity.this,
+                        "Error: " + adError.getErrorMessage(),
+                        Toast.LENGTH_LONG)
+                        .show();
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                // Ad loaded callback
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                // Ad clicked callback
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+                // Ad impression logged callback
+            }
+        };
+
+        // Request an ad
+        adView.loadAd(adView.buildLoadAdConfig().withAdListener(adListener).build());
         enterButton.setOnClickListener(new View.OnClickListener( ) {
 
             @Override
@@ -46,32 +107,16 @@ public class NameActivity extends AppCompatActivity {
             }
         });
 
-        //Determine screen size
-        if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_LARGE) {
-            text="LargeScreen";
-        }
-        else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-            text="MediumScreen";
-        }
-        else if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_SMALL) {
-            text="SmallScreen";
-        }
-        else {
-            text="None";
-        }
-
-        //Determine density
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        float density = metrics.density;
-        float dpWidth=metrics.widthPixels/density;
-        float dpHeight=metrics.heightPixels/density;
-
-        text=text + " with density of "+metrics.densityDpi+ " which is a multiplier of "+density+", width of "+dpWidth+"dp, height of "+dpHeight+"dp";
-
-
 
     }
 
+    @Override
+    protected void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
 
 
 }
