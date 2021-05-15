@@ -230,6 +230,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+   @Override
+    protected void onDestroy() {
+        if (interstitialAd != null) {
+            interstitialAd.destroy();
+        }
+        super.onDestroy();
+    }
 
 
 
