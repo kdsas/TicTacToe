@@ -679,6 +679,18 @@ public class OnlineGameActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    protected void onDestroy() {
+        if (interstitialAd != null) {
+            interstitialAd.destroy();
+        }
+        super.onDestroy();
+    }
+
+    
+    
+    
+    
 }
 
 
