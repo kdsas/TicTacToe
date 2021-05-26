@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 
@@ -256,8 +257,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
        textView.setText("x's Turn - Tap to play");
     }
 
-}
-
+} 
 
 
 
