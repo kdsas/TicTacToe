@@ -7,6 +7,8 @@ implementation of WebSockets and the minimax algorithm, raw mp3 files within an 
 
 connection to Node.js server/submitting messages to Node.js server,
 
+Android Studio fragments implementation,
+
 saving data using Android Studio Shared Preferences,
 
 creating a UDP client, and
